@@ -1,0 +1,2 @@
+Pylons>=0.9.6rc2
+Elixir==0.3.0
