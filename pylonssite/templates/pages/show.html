@@ -1,0 +1,32 @@
+<%inherit file="layout.html" />
+
+<div id="content">
+  <h2 class="first-heading">${h.textilize(c.page.title)}</h2>
+  ${h.textilize(c.page.content)}
+</div>
+
+<div id="sidebar">
+  ${h.textilize(c.directory.site.sidebar)}
+  ${h.textilize(c.page.sidebar).decode('utf-8')}
+</div>
+
+<div class="clear-float"></div>
+
+<%def name="nav()">
+  <%
+    lists = []
+    for d in c.directory.site.directories:
+        lis = []
+        for p in d.pages:
+            class_ = 'current-page' if p.id == c.page.id else ''
+            s = c.directory.slug
+            d_prefix = '' if s == 'root' else '/%s' % s
+            t = p.title
+            a = h.link_to(t, h.url_for('%s/%s' % (d_prefix, p.slug)), title=t)
+            lis.append({'a': a, 'class_': class_})
+        if s == 'root':
+            lis.append({'a': '<a href="http://blog.wyattbaldwin.com/" title="Visit my blog">Blog</a>'})
+        lists.append(lis)
+  %>
+  ${h.make_nav_list(lists)}
+</%def>

@@ -1,0 +1,23 @@
+#!/bin/sh
+
+exec 2>&1
+
+PREFIX=$HOME
+APP_DIR=${PREFIX}/webapps/wlb_pylons
+BIN_DIR=${PREFIX}/bin
+
+cd ${APP_DIR}
+
+# Abort if already running
+touch paster.pid
+pid=`cat paster.pid`
+if [ `ps -u bycycle | awk '{print $1}' | grep ${pid} | wc -l` -eq 1 ]; then
+    echo "Aborting: Already running."
+    exit 1
+fi
+
+${BIN_DIR}/python -u ${BIN_DIR}/paster serve \
+    --pid-file=${APP_DIR}/paster.pid \
+    --log-file=${APP_DIR}/paster.log \
+    --daemon ${APP_DIR}/production.ini
+

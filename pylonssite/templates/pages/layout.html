@@ -1,0 +1,22 @@
+<%inherit file="/base_layout.html" />
+
+<%def name="title()">
+  <%
+    parts = [c.directory.site.title]
+    if c.directory.slug != 'root':
+      parts.append(c.directory.slug)
+    parts.append(c.page.title)
+  %>
+  ${' - '.join([str(p) for p in parts])}
+</%def>
+
+<%def name="masthead()">
+  <h1 id="logo"><a href="/">${c.directory.site.logo_text}</a></h1>
+  <div id="tag_line">${c.directory.site.tagline}</div>
+</%def>
+
+<%def name="footer()">
+  ${h.textilize(c.directory.site.copyright)}
+</%def>
+
+<%def name="meta_bottom()">${h.make_nav_menu(c, 'meta-bottom-nav')}</%def>
